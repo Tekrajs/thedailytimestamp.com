@@ -127,6 +127,7 @@ class Profile extends React.Component {
 
                 <img src={profile.image} className="user-img" alt={profile.username} />
                 <h4>{profile.username}</h4>
+                <h4>{profile.account_id}</h4>
                 <p>{profile.bio}</p>
 
                 <EditProfileSettings isUser={isUser} />

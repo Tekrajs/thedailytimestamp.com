@@ -17,7 +17,9 @@ class SettingsForm extends React.Component {
       username: '',
       bio: '',
       email: '',
-      password: ''
+      password: '',
+      iswriter: '',
+      account_id: ''
     };
 
     this.updateState = field => ev => {
@@ -44,7 +46,9 @@ class SettingsForm extends React.Component {
         image: this.props.currentUser.image || '',
         username: this.props.currentUser.username,
         bio: this.props.currentUser.bio,
-        email: this.props.currentUser.email
+        email: this.props.currentUser.email,
+        account_id: this.props.currentUser.account_id,
+        iswriter: this.props.currentUser.iswriter
       });
     }
   }
@@ -55,7 +59,9 @@ class SettingsForm extends React.Component {
         image: nextProps.currentUser.image || '',
         username: nextProps.currentUser.username,
         bio: nextProps.currentUser.bio,
-        email: nextProps.currentUser.email
+        email: nextProps.currentUser.email,
+        account_id: nextProps.currentUser.account_id,
+        iswriter: nextProps.currentUser.iswriter
       }));
     }
   }
@@ -81,6 +87,15 @@ class SettingsForm extends React.Component {
               placeholder="Username"
               value={this.state.username}
               onChange={this.updateState('username')} />
+          </fieldset>
+
+          <fieldset className="form-group">
+            <input
+              className="form-control form-control-lg"
+              type="text"
+              placeholder="Account Id"
+              value={this.state.account_id}
+              onChange={this.updateState('account_id')} />
           </fieldset>
 
           <fieldset className="form-group">

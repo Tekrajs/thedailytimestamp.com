@@ -18,8 +18,12 @@ const mapDispatchToProps = dispatch => ({
     dispatch({ type: UPDATE_FIELD_AUTH, key: 'password', value }),
   onChangeUsername: value =>
     dispatch({ type: UPDATE_FIELD_AUTH, key: 'username', value }),
-  onSubmit: (username, email, password) => {
-    const payload = agent.Auth.register(username, email, password);
+  onChangeIswriter: value =>
+    dispatch({ type: UPDATE_FIELD_AUTH, key: 'iswriter', value }),
+  onchangeAccountId: value=>
+    dispatch({type:UPDATE_FIELD_AUTH,key:'account_id', value }),
+  onSubmit: (username, email, password,iswriter,account_id) => {
+    const payload = agent.Auth.register(username, email, password, iswriter, account_id);
     dispatch({ type: REGISTER, payload })
   },
   onUnload: () =>
@@ -29,12 +33,15 @@ const mapDispatchToProps = dispatch => ({
 class Register extends React.Component {
   constructor() {
     super();
+    console.log(this);
     this.changeEmail = ev => this.props.onChangeEmail(ev.target.value);
     this.changePassword = ev => this.props.onChangePassword(ev.target.value);
     this.changeUsername = ev => this.props.onChangeUsername(ev.target.value);
-    this.submitForm = (username, email, password) => ev => {
+    this.changeIswriter = ev => this.props.onChangeIswriter(ev.target.value);
+    this.changeAccountId = ev => this.props.onchangeAccountId(ev.target.value);
+    this.submitForm = (username, email, password, iswriter, account_id) => ev => {
       ev.preventDefault();
-      this.props.onSubmit(username, email, password);
+      this.props.onSubmit(username, email, password, iswriter, account_id);
     }
   }
 
@@ -46,7 +53,8 @@ class Register extends React.Component {
     const email = this.props.email;
     const password = this.props.password;
     const username = this.props.username;
-
+    const iswriter = this.props.iswriter;
+    const account_id = this.props.account_id;
     return (
       <div className="auth-page">
         <div className="container page">
@@ -62,7 +70,7 @@ class Register extends React.Component {
 
               <ListErrors errors={this.props.errors} />
 
-              <form onSubmit={this.submitForm(username, email, password)}>
+              <form onSubmit={this.submitForm(username, email, password, iswriter,account_id)}>
                 <fieldset>
 
                   <fieldset className="form-group">
@@ -72,6 +80,15 @@ class Register extends React.Component {
                       placeholder="Username"
                       value={this.props.username}
                       onChange={this.changeUsername} />
+                  </fieldset>
+
+                  <fieldset className="form-group">
+                    <input
+                      className="form-control form-control-lg"
+                      type="text"
+                      placeholder="Account Id"
+                      value={this.props.account_id}
+                      onChange={this.changeAccountId} />
                   </fieldset>
 
                   <fieldset className="form-group">
@@ -90,6 +107,15 @@ class Register extends React.Component {
                       placeholder="Password"
                       value={this.props.password}
                       onChange={this.changePassword} />
+                  </fieldset>
+
+                  <fieldset className="form-group">
+                    <input
+                      className="form-control form-control-lg"
+                      type="hidden"
+                      name="iswriter"
+                      value='0'
+                      onChange={this.changeIswriter} />
                   </fieldset>
 
                   <button
